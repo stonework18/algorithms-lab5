@@ -28,7 +28,7 @@ public:
 		: capacity(initialCapacity), frontIndex(0), rearIndex(0), count(0) { 
 		data = new T[capacity]; }
 	~Queue() { delete[] data; }
-
+	// Operators
 	Queue(const Queue&) = delete;
 	Queue& operator=(const Queue&) = delete;
 	// Methods
@@ -85,37 +85,37 @@ private:
 		capacity = newCapacity;
 	}
 public:
-
+	// Constructors
 	PriorityQueue(int initialCapacity = 10)
 		: capacity(initialCapacity), count(0) {
 		elements = new Element[capacity];
 	}
 	~PriorityQueue() { delete[] elements; }
-
+	// Operators
 	PriorityQueue(const PriorityQueue&) = delete;
 	PriorityQueue& operator=(const PriorityQueue&) = delete;
 	// Methods
-	void enqueue(const T& value, int priority) {
+	void enqueue(const T& value, int priority) { // Adds an element in the end
 		if (count >= capacity) resize();
 		elements[count].data = value;
 		elements[count].priority = priority;
 		count++;
 	}
-	T dequeue() {
+	T dequeue() { // Returns the priority elements
 		if (isEmpty()) throw underflow_error("Queue is empty.");
 		int maxID = 0;
 		for (int i = 1; i < count; i++) {
-			if (elements[i].priority > elements[maxID].priority) {
+			if (elements[i].priority > elements[maxID].priority) { // Found a higher priority
 				maxID = i;
-			}
+			} // Remembered the data
 		} T result = elements[maxID].data;
-		for (int i = maxID; i < count - 1; i++) {
+		for (int i = maxID; i < count - 1; i++) { // Remove from the array
 			elements[i] = elements[i + 1];
 		} count--;
 		return result;
 	}
 
-	T front() const {
+	T front() const { // Take the element
 		if (isEmpty()) throw underflow_error("Queue is empty.");
 		int maxID = 0;
 		for (int i = 1; i < count; i++) {
